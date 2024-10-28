@@ -1,14 +1,14 @@
 module "a8_ec2_instance" {
-  source        = "./modules/ec2_instance"
+  source = "./modules/ec2_instance"
 }
 
 #s3 bucket
 resource "aws_s3_bucket" "a8_bucket" {
-    bucket = "fariha-a8-bucket"
+  bucket = "fariha-a8-bucket"
 
-    tags = {
-        Name = "fariha-a8-state"
-    }
+  tags = {
+    Name = "fariha-a8-state"
+  }
 }
 
 /*
@@ -26,11 +26,11 @@ resource "aws_s3_bucket" "a8_bucket" {
 # look into: terraform init -backend-config="" backend.hcl
 terraform {
   backend "s3" {
-    encrypt = true    
-    bucket = "fariha-a8-bucket"
+    encrypt        = true
+    bucket         = "fariha-a8-bucket"
     dynamodb_table = "tf-state-lock-dynamo"
-    key    = "terraform.tfstate"
-    region = "us-west-2"
+    key            = "terraform.tfstate"
+    region         = "us-west-2"
   }
 }
 
@@ -42,18 +42,19 @@ terraform {
 
     attribute { ... }: Describes the schema of attributes in the table.
         - name = "LockID": Specifies LockID as the name of the attribute, which is used as the hash key.
-            - In DynamoDB, the primary partition key is the main identifier that uniquely defines each item in a table. By setting LockID as the primary partition key in the tf-state-lock-dynamo table, DynamoDB ensures each entry in this table is uniquely identified by its LockID value
+            - In DynamoDB, the primary partition key is the main identifier that uniquely defines each item in a table. 
+            - By setting LockID as the primary partition key in the tf-state-lock-dynamo table, DynamoDB ensures each entry in this table is uniquely identified by its LockID value
 
     type = "S": Sets the type of the LockID attribute to S, which stands for string type in DynamoDB.
 */
 resource "aws_dynamodb_table" "a8_dynamo" {
-    name = "tf-state-lock-dynamo"
-    hash_key = "LockID"
-    read_capacity = 1
-    write_capacity = 1
-    attribute {
-        name = "LockID"
-        type = "S"
-    }
+  name           = "tf-state-lock-dynamo"
+  hash_key       = "LockID" # Defines LockID as the primary partition key for the table, ensuring each item in the table has a unique identifier
+  read_capacity  = 1
+  write_capacity = 1
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
 }
 

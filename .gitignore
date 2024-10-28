@@ -1,2 +1,4 @@
 ./terraform.tfstate
 ./variables.tf
+
+.terraform/

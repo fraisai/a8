@@ -31,6 +31,7 @@ terraform {
     dynamodb_table = "tf-state-lock-dynamo"
     key            = "terraform.tfstate"
     region         = "us-west-2"
+    depends_on     = [aws_dynamodb_table.a8_dynamo.id]
   }
 }
 

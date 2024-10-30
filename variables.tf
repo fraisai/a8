@@ -1,12 +1,15 @@
-variable "vpc_cidr" {
-  type    = string
-  default = "172.16.0.0/16"
-}
+/*
+*
+  variable "vpc_cidr" {
+    type    = string
+    default = "172.16.0.0/16"
+  }
 
-variable "subnet_cidr" {
-  type    = string
-  default = "172.16.0.0/18"
-}
+  variable "subnet_cidr" {
+    type    = string
+    default = "172.16.0.0/18"
+  }
+*/
 
 variable "az" {
   type    = string
